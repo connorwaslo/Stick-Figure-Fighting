@@ -4,6 +4,7 @@ import fighting.entities.Enemy;
 import fighting.entities.Player;
 import fighting.util.Input;
 import fighting.level.Level;
+import fighting.util.Texture;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -17,6 +18,8 @@ import static org.lwjgl.system.MemoryUtil.NULL;
  * Created by Connor Waslo on 12/24/2016.
  */
 public class Game {
+
+    public static final int WIDTH = 800, HEIGHT = 600;
 
     private long window;
     private GLFWKeyCallback keyCallback;
@@ -40,7 +43,7 @@ public class Game {
 
         // Init window
         glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-        window = glfwCreateWindow(800, 600, "Stick Figure Fighting", NULL, NULL);
+        window = glfwCreateWindow(WIDTH, HEIGHT, "Stick Figure Fighting", NULL, NULL);
 
         // Check Window init
         if (window == NULL)
@@ -51,12 +54,15 @@ public class Game {
         glfwSetKeyCallback(window, keyCallback);
 
         GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        glfwSetWindowPos(window, (vidmode.width() - 800) / 2, (vidmode.height() - 600) / 2);
+        glfwSetWindowPos(window, (vidmode.width() - WIDTH) / 2, (vidmode.height() - HEIGHT) / 2);
 
         // Set context for OpenGL
         glfwMakeContextCurrent(window);
 
         glfwShowWindow(window);
+
+        // Register context with LWJGL3
+        GL.createCapabilities();
 
         sync(60);
 
@@ -64,6 +70,15 @@ public class Game {
         /*player = new Player(100.0f, 100.0f);
         enemy = new Enemy(600.0f, 300.0f, player);*/
         level = new Level();
+        /*for (int r = 0; r < 30; r++) {
+            for (int c = 0; c < x[0].length; c++) {
+                System.out.print(x[r][c] + " ");
+            }
+
+            System.out.println("");
+        }*/
+
+        //System.out.println(x[10][10]);
     }
 
     private void update() {
@@ -77,7 +92,7 @@ public class Game {
 
     private void render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
         /*player.render();
         enemy.render();*/
@@ -87,13 +102,11 @@ public class Game {
     }
 
     private void loop() {
-        // Register context with LWJGL3
-        GL.createCapabilities();
-
         // Set projection
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        glOrtho(0, 800, 600, 0, -1, 1);
+        glOrtho(0, WIDTH, HEIGHT, 0, -1, 1);
+        glEnable(GL_BLEND); // Allows transparency
 
         // Game loop
         while (glfwWindowShouldClose(window) != GL_TRUE) {
