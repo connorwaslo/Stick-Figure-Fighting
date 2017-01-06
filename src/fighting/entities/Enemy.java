@@ -14,29 +14,31 @@ public class Enemy extends Entity {
 
     public Enemy(float x, float y, Entity target) {
         super(x, y, WIDTH, HEIGHT);
-        setColor(1.0f, 0.0f, 0.0f);
+        setColor(1f, 0f, 0f);
 
         this.target = target;
 
-        velX = 0.01f;
-        velY = 0.01f;
+        velX = 0.03f;
+        velY = 0.03f;
     }
 
     @Override
     public void update() {
-        if (!isColliding(target)) {
-            if (target.getX() < x) {
-                x -= velX;
-            } else if (target.getX() > x) {
-                x += velX;
-            }
+        if (isColliding(target))
+            checkCollisionDirection(target);
 
-            if (target.getY() < y) {
-                y -= velY;
-            } else if (target.getY() > y) {
-                y += velY;
-            }
+        if (target.getX() < x && canMoveLeft) {
+               x -= velX;
+           } else if (target.getX() > x && canMoveRight) {
+               x += velX;
+           }
+
+        if (target.getY() < y && canMoveUp) {
+            y -= velY;
+        } else if (target.getY() > y && canMoveDown) {
+            y += velY;
         }
+
     }
 
     @Override

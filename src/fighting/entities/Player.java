@@ -17,7 +17,7 @@ public class Player extends Entity {
 
     public Player(float x, float y, ArrayList<Enemy> enemies) {
         super(x, y, WIDTH, HEIGHT);
-        setColor(0.0f, 0.0f, 1.0f);
+        setColor(0f, 0f, 1f);
 
         this.enemies = enemies;
 
@@ -33,24 +33,25 @@ public class Player extends Entity {
 
         if (Input.keys[GLFW_KEY_LEFT] && canMoveLeft) {
             x -= velX;
-            System.out.println("Can Move Left: " + canMoveLeft);
+            //System.out.println("Can Move Left: " + canMoveLeft);
         } else if (Input.keys[GLFW_KEY_RIGHT] && canMoveRight) {
             x += velX;
-            System.out.println("Can Move Right: " + canMoveRight);
+            //System.out.println("Can Move Right: " + canMoveRight);
         }
 
         if (Input.keys[GLFW_KEY_UP] && canMoveUp) {
             y -= velY;
-            System.out.println("Can Move Up: " + canMoveUp);
+            //System.out.println("Can Move Up: " + canMoveUp);
         } else if (Input.keys[GLFW_KEY_DOWN] && canMoveDown) {
             y += velY;
-            System.out.println("Can Move Down: " + canMoveDown);
+            //System.out.println("Can Move Down: " + canMoveDown);
         }
     }
 
     @Override
     public void render() {
-        glColor3f(getColor().getR(), getColor().getG(), getColor().getB());
+        //glColor3f(getColor().getR(), getColor().getG(), getColor().getB());
+        glColor3f(1f, 0f, 1f);
         glBegin(GL_QUADS);
             glVertex2f(x, y);
             glVertex2f(x + width, y);
