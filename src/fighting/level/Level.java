@@ -1,14 +1,11 @@
 package fighting.level;
 
 import fighting.Game;
-import fighting.entities.Enemy;
-import fighting.entities.Player;
+import fighting.objects.Block;
+import fighting.objects.entities.Enemy;
+import fighting.objects.entities.Player;
 import fighting.util.Texture;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -17,6 +14,8 @@ import static org.lwjgl.opengl.GL11.*;
  * Created by Connor Waslo on 12/30/2016.
  */
 public class Level {
+
+    public static final float GRAVITY = 0.003f;
 
     private ArrayList<Enemy> enemies;
     private Player player;
@@ -28,17 +27,16 @@ public class Level {
 
     public Level() {
         enemies = new ArrayList<>();
+        blocks = new ArrayList<>();
         path = "res/TestPic.png";
         tex = new Texture(path);
 
-        player = new Player(100.0f, 100.0f, enemies);
+        player = new Player(500.0f, 100.0f, enemies, blocks);
 
-        blocks = new ArrayList<>();
-
-        enemies.add(new Enemy(400.0f, 400.0f, player));
-        //createBlocks(tex.getColorVals());
-
-//        System.out.println(blocks.get(1).getEndCoords()[0]);
+        enemies.add(new Enemy(400.0f, 100.0f, player, blocks));
+        enemies.add(new Enemy(600f, 300f, player, blocks));
+        blocks.add(new Block(500, 0, 800, 100));
+        blocks.add(new Block(390, 400, 130, 200));
     }
 
     public void update() {
@@ -47,6 +45,14 @@ public class Level {
         }
 
         player.update();
+
+        // Check enemies for death
+        for (int i = 0; i < enemies.size(); i++) {
+            if (!enemies.get(i).isAlive()) {
+                enemies.remove(i);
+                i--;
+            }
+        }
     }
 
     public void render() {
@@ -71,6 +77,9 @@ public class Level {
 
         glDisable(GL_TEXTURE_2D);
 
+        for (Block b : blocks) {
+            b.render();
+        }
         for (Enemy e : enemies) {
             e.render();
         }
