@@ -1,10 +1,7 @@
 package fighting;
 
-import fighting.entities.Enemy;
-import fighting.entities.Player;
 import fighting.util.Input;
 import fighting.level.Level;
-import fighting.util.Texture;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -66,25 +63,10 @@ public class Game {
 
         sync(60);
 
-        // Entity initiation
-        /*player = new Player(100.0f, 100.0f);
-        enemy = new Enemy(600.0f, 300.0f, player);*/
         level = new Level();
-        /*for (int r = 0; r < 30; r++) {
-            for (int c = 0; c < x[0].length; c++) {
-                System.out.print(x[r][c] + " ");
-            }
-
-            System.out.println("");
-        }*/
-
-        //System.out.println(x[10][10]);
     }
 
     private void update() {
-        // Handle input
-        /*player.update();
-        enemy.update();*/
         level.update();
 
         glfwPollEvents();
@@ -92,10 +74,7 @@ public class Game {
 
     private void render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-        /*player.render();
-        enemy.render();*/
         level.render();
 
         glfwSwapBuffers(window);
@@ -107,6 +86,7 @@ public class Game {
         glLoadIdentity();
         glOrtho(0, WIDTH, HEIGHT, 0, -1, 1);
         glEnable(GL_BLEND); // Allows transparency
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         // Game loop
         while (glfwWindowShouldClose(window) != GL_TRUE) {
