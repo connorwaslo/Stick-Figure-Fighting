@@ -87,8 +87,8 @@ public class Level {
         player.render();
     }
 
-    // FUCK THIS ALGORITHM IT LOCKS UP EVERY SINGLE TIME
-    private void createBlocks(int[][] coords) {
+    // THIS ALGORITHM LOCKS UP EVERY SINGLE TIME -- TODO: ... fix it
+    /*private void createBlocks(int[][] coords) {
         // Block index
         int i = 0;
         for (int r = 0; r < coords.length; r++) {
@@ -110,7 +110,7 @@ public class Level {
                 }
             }
         }
-    }
+    }*/
 
     // Recursion is hard
     private void findBlockCoords(int[][] coords, Block b, int r, int c) {
